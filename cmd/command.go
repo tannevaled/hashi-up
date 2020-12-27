@@ -47,16 +47,25 @@ func Execute() error {
 		},
 	}
 
+	var boundary = &cobra.Command{
+		Use: "boundary",
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.Help()
+		},
+	}
+
 	certificate.AddCommand(CreateCertificateCommand())
 	nomad.AddCommand(InstallNomadCommand())
 	consul.AddCommand(InstallConsulCommand())
 	vault.AddCommand(InstallVaultCommand())
+	boundary.AddCommand(InstallBoundaryCommand())
 
 	rootCmd.AddCommand(VersionCommand())
 	rootCmd.AddCommand(certificate)
 	rootCmd.AddCommand(nomad)
 	rootCmd.AddCommand(consul)
 	rootCmd.AddCommand(vault)
+	rootCmd.AddCommand(boundary)
 
 	rootCmd.PersistentFlags().StringVar(&sshTargetAddr, "ssh-target-addr", "", "Remote SSH target address (e.g. 127.0.0.1:22")
 	rootCmd.PersistentFlags().StringVar(&sshTargetUser, "ssh-target-user", "root", "Username for SSH login")
